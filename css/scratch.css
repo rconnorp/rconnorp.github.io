@@ -1,0 +1,497 @@
+/* =====================================================
+   scratch.css — Custom stylesheet for film.html
+   Built from scratch, no Bootstrap dependency.
+   Design: dark moody cinema aesthetic
+   ===================================================== */
+
+/* ---------- Design Tokens (standalone) ---------- */
+:root {
+  --film-dark: #15171A;        /* deep background, evokes dark theater */
+  --film-mid: #1E2228;
+  --film-card: #252B32;
+  --film-border: rgba(255, 255, 255, 0.08);
+  --film-accent: #7A1F2B;
+  --film-gold: #C9A84C;
+  --film-offwhite: #EDE9E0;
+  --film-muted: rgba(237, 233, 224, 0.55);
+  --film-transition: 0.3s ease;
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Font color and font family definitions */
+body {
+  font-family: 'Lora', Georgia, serif;        /* literary serif for body */
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--film-offwhite);                /* light text on dark background */
+  background-color: var(--film-dark);          /* deep dark moody background */
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Special Elite', 'Courier New', monospace;  /* typewriter/screenplay headers */
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--film-offwhite);
+  letter-spacing: 0.01em;
+}
+
+p {
+  color: var(--film-offwhite);
+  line-height: 1.85;
+}
+
+a {
+  color: var(--film-gold);
+  text-decoration: none;
+  transition: color var(--film-transition);
+}
+
+a:hover {
+  color: #e8c56a;
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul, ol {
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.35rem;
+  color: var(--film-offwhite);
+}
+
+/* ---------- Navigation ---------- */
+.film-nav {
+  background-color: rgba(21, 23, 26, 0.96);
+  border-bottom: 1px solid var(--film-border);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.film-nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.film-nav-back {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.875rem;
+  color: var(--film-muted);
+  letter-spacing: 0.04em;
+}
+
+.film-nav-back:hover {
+  color: var(--film-offwhite);
+  text-decoration: none;
+}
+
+.film-nav-app {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.875rem;
+  color: var(--film-gold);
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  padding: 0.4rem 0.875rem;
+  border-radius: 2px;
+  transition: background-color var(--film-transition), border-color var(--film-transition);
+}
+
+.film-nav-app:hover {
+  background-color: rgba(201, 168, 76, 0.1);
+  border-color: var(--film-gold);
+  text-decoration: none;
+}
+
+/* ---------- Hero ---------- */
+.film-hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--film-dark);
+}
+
+.film-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../img/cinema-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  filter: grayscale(30%);
+}
+
+.film-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(21, 23, 26, 0.3) 0%,
+    rgba(21, 23, 26, 0.6) 60%,
+    rgba(21, 23, 26, 1) 100%
+  );
+}
+
+.film-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 4rem;
+  text-align: center;
+}
+
+.film-hero-eyebrow {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--film-gold);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.film-hero-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--film-offwhite);
+  margin-bottom: 1.25rem;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+
+.film-hero-subtitle {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--film-muted);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ---------- Table of Contents ---------- */
+.film-toc {
+  background-color: var(--film-mid);
+  border: 1px solid var(--film-border);
+  border-radius: 2px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+}
+
+.film-toc h2 {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--film-muted);
+  margin-bottom: 1rem;
+}
+
+.film-toc ol {
+  margin-bottom: 0;
+  padding-left: 1.25rem;
+}
+
+.film-toc ol li {
+  margin-bottom: 0.5rem;
+}
+
+.film-toc a {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.9375rem;
+  color: var(--film-offwhite);
+  letter-spacing: 0.02em;
+}
+
+.film-toc a:hover {
+  color: var(--film-gold);
+  text-decoration: none;
+}
+
+/* ---------- Main Content Area ---------- */
+.film-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Div 1: Content section block — structural positioning */
+.film-section {
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--film-border);
+}
+
+.film-section:last-child {
+  border-bottom: none;
+}
+
+/* Div 2: Section header block — typographic styling */
+.film-section-header {
+  margin-bottom: 2rem;
+}
+
+.film-section-label {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--film-accent);
+  display: block;
+  margin-bottom: 0.625rem;
+}
+
+.film-section-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  margin-bottom: 0;
+}
+
+/* Div 3: Media block — image/video containers */
+.film-media-block {
+  margin: 2rem 0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.film-media-block img {
+  width: 100%;
+  border-radius: 2px;
+}
+
+.film-media-caption {
+  font-size: 0.8125rem;
+  color: var(--film-muted);
+  margin-top: 0.625rem;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Div 4: Quote block — pullquote styling */
+.film-pullquote {
+  margin: 2.5rem 0;
+  padding: 1.75rem 2rem;
+  border-left: 3px solid var(--film-gold);
+  background-color: var(--film-mid);
+}
+
+.film-pullquote blockquote {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.65;
+  color: var(--film-offwhite);
+  margin-bottom: 0.75rem;
+}
+
+.film-pullquote cite {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.8125rem;
+  color: var(--film-muted);
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Essay Text ---------- */
+.film-essay p {
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  color: rgba(237, 233, 224, 0.88);
+  margin-bottom: 1.25rem;
+}
+
+.film-essay p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Nested List Section ---------- */
+.film-craft-list {
+  background-color: var(--film-card);
+  border: 1px solid var(--film-border);
+  border-radius: 2px;
+  padding: 2rem 2.25rem;
+  margin: 2rem 0;
+}
+
+.film-craft-list > ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+  margin-bottom: 0;
+}
+
+.film-craft-list > ol > li {
+  font-family: 'Special Elite', monospace;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: var(--film-offwhite);
+  margin-bottom: 1rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--film-border);
+}
+
+.film-craft-list > ol > li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.film-craft-list ul {
+  list-style: disc;
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+.film-craft-list ul li {
+  font-family: 'Lora', serif;
+  font-size: 0.9375rem;
+  color: var(--film-muted);
+  margin-bottom: 0.2rem;
+  letter-spacing: 0;
+}
+
+/* ---------- Video Embed ---------- */
+.film-video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 2px;
+  margin: 2rem 0;
+  background-color: var(--film-mid);
+}
+
+.film-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ---------- Tableau Embed ---------- */
+.film-tableau-wrapper {
+  margin: 2rem 0;
+  border: 1px solid var(--film-border);
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: var(--film-mid);
+}
+
+/* ---------- CTA Block ---------- */
+.film-cta-block {
+  background-color: var(--film-mid);
+  border: 1px solid var(--film-border);
+  border-radius: 2px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.film-cta-block h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.film-cta-block p {
+  color: var(--film-muted);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.film-cta-btn {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.9375rem;
+  letter-spacing: 0.06em;
+  color: var(--film-dark);
+  background-color: var(--film-gold);
+  padding: 0.875rem 2rem;
+  border-radius: 2px;
+  display: inline-block;
+  transition: background-color var(--film-transition), transform var(--film-transition);
+}
+
+.film-cta-btn:hover {
+  background-color: #e8c56a;
+  text-decoration: none;
+  transform: translateY(-2px);
+  color: var(--film-dark);
+}
+
+/* ---------- Footer ---------- */
+.film-footer {
+  background-color: var(--film-mid);
+  border-top: 1px solid var(--film-border);
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.film-footer p {
+  font-family: 'Special Elite', monospace;
+  font-size: 0.8125rem;
+  color: var(--film-muted);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+.film-footer a {
+  color: var(--film-muted);
+}
+
+.film-footer a:hover {
+  color: var(--film-offwhite);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .film-hero-content {
+    padding: 3.5rem 1.5rem 3rem;
+  }
+
+  .film-toc {
+    padding: 1.5rem;
+  }
+
+  .film-section {
+    padding: 3rem 0;
+  }
+
+  .film-pullquote {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .film-craft-list {
+    padding: 1.5rem;
+  }
+
+  .film-cta-block {
+    padding: 2rem 1.5rem;
+  }
+
+  h1, .film-hero-title {
+    font-size: 2.25rem;
+  }
+}

@@ -1,0 +1,616 @@
+/* =====================================================
+   Connor Peterson Portfolio — Bootstrap Custom CSS
+   Layered over Bootstrap 5 CDN
+   ===================================================== */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  --charcoal: #1F2428;
+  --charcoal-soft: #2D343A;
+  --burgundy: #7A1F2B;
+  --burgundy-deep: #5A1620;
+  --offwhite: #F5F1EA;
+  --offwhite-warm: #EBE5D9;
+  --text-dark: #1A1A1A;
+  --text-muted: #5A5A5A;
+  --transition: 0.25s ease;
+}
+
+/* ---------- Base Typography ---------- */
+/* Fonts loaded via <link> in HTML: Playfair Display + Inter */
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+  background-color: var(--offwhite);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  background-color: var(--charcoal) !important;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(245, 241, 234, 0.08);
+}
+
+.navbar-brand {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--offwhite) !important;
+  letter-spacing: 0.01em;
+  transition: color var(--transition);
+}
+
+.navbar-brand:hover {
+  color: rgba(245, 241, 234, 0.75) !important;
+}
+
+.navbar-nav .nav-link {
+  color: rgba(245, 241, 234, 0.7) !important;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem !important;
+  transition: color var(--transition);
+  position: relative;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--offwhite) !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: var(--offwhite) !important;
+}
+
+.navbar-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background-color: var(--burgundy);
+  border-radius: 1px;
+}
+
+.navbar-toggler {
+  border-color: rgba(245, 241, 234, 0.25);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28245%2C241%2C234%2C0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* ---------- Page Headers ---------- */
+.page-header {
+  background-color: var(--charcoal);
+  padding: 5rem 0 4rem;
+  color: var(--offwhite);
+}
+
+.page-header h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  color: var(--offwhite);
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  color: rgba(245, 241, 234, 0.65);
+  font-size: 1.125rem;
+  margin-bottom: 0;
+}
+
+/* ---------- Hero Section ---------- */
+.hero-section {
+  background-color: var(--charcoal);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 5rem 0;
+}
+
+.hero-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 1.25rem;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 6.5vw, 4.75rem);
+  color: var(--offwhite);
+  line-height: 1.08;
+  margin-bottom: 1.25rem;
+}
+
+.hero-subhead {
+  font-size: 1.0625rem;
+  color: rgba(245, 241, 234, 0.7);
+  line-height: 1.75;
+  margin-bottom: 2.25rem;
+  max-width: 480px;
+}
+
+.hero-headshot {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 3px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
+  display: block;
+}
+
+/* ---------- Buttons ---------- */
+.btn-burgundy {
+  background-color: var(--burgundy);
+  border-color: var(--burgundy);
+  color: var(--offwhite);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.8rem 1.875rem;
+  border-radius: 2px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.btn-burgundy:hover {
+  background-color: var(--burgundy-deep);
+  border-color: var(--burgundy-deep);
+  color: var(--offwhite);
+  transform: translateY(-2px);
+}
+
+.btn-outline-offwhite {
+  background-color: transparent;
+  border: 1.5px solid rgba(245, 241, 234, 0.4);
+  color: rgba(245, 241, 234, 0.85);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.8rem 1.875rem;
+  border-radius: 2px;
+  text-decoration: none;
+  display: inline-block;
+  transition: border-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.btn-outline-offwhite:hover {
+  border-color: var(--offwhite);
+  color: var(--offwhite);
+  transform: translateY(-2px);
+}
+
+/* ---------- Section Wrappers ---------- */
+.section-offwhite {
+  background-color: var(--offwhite);
+  padding: 5.5rem 0;
+}
+
+.section-warm {
+  background-color: var(--offwhite-warm);
+  padding: 5.5rem 0;
+}
+
+.section-charcoal {
+  background-color: var(--charcoal);
+  padding: 5.5rem 0;
+}
+
+.section-charcoal-soft {
+  background-color: var(--charcoal-soft);
+  padding: 5.5rem 0;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3vw, 2.375rem);
+  margin-bottom: 0.75rem;
+}
+
+.section-title-light {
+  color: var(--offwhite);
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-bottom: 3rem;
+  max-width: 540px;
+}
+
+/* ---------- Feature Cards ---------- */
+.card-feature {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 3px;
+  padding: 2.25rem 2rem;
+  height: 100%;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.card-feature:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+}
+
+.card-feature-icon {
+  color: var(--burgundy);
+  font-size: 1.875rem;
+  margin-bottom: 1.125rem;
+  display: block;
+}
+
+.card-feature-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1875rem;
+  font-weight: 700;
+  margin-bottom: 0.625rem;
+  color: var(--text-dark);
+}
+
+.card-feature-text {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-bottom: 0;
+  line-height: 1.65;
+}
+
+/* ---------- Highlight Callout ---------- */
+.highlight-callout {
+  border-left: 3px solid var(--burgundy);
+  padding-left: 2.25rem;
+}
+
+.highlight-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 1rem;
+}
+
+.highlight-title {
+  font-size: clamp(1.5rem, 3vw, 2.125rem);
+  color: var(--offwhite);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.highlight-body {
+  color: rgba(245, 241, 234, 0.65);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin-bottom: 0;
+}
+
+/* ---------- Stat Cards ---------- */
+.stat-card {
+  background-color: rgba(245, 241, 234, 0.04);
+  border: 1px solid rgba(245, 241, 234, 0.1);
+  border-radius: 3px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245, 241, 234, 0.55);
+  margin-bottom: 0;
+}
+
+/* ---------- About Page ---------- */
+.about-headshot {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 3px;
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.12);
+  display: block;
+}
+
+.about-bio p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 1.25rem;
+}
+
+.about-bio p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Resume Page ---------- */
+.resume-section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 1.5px solid var(--offwhite-warm);
+}
+
+.resume-entry {
+  margin-bottom: 2.25rem;
+}
+
+.resume-entry:last-child {
+  margin-bottom: 0;
+}
+
+.resume-employer {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0;
+}
+
+.resume-role {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-bottom: 0.125rem;
+}
+
+.resume-meta {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--burgundy);
+}
+
+.resume-bullets {
+  margin-top: 0.625rem;
+  padding-left: 1.25rem;
+  color: var(--text-dark);
+  margin-bottom: 0;
+}
+
+.resume-bullets li {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  margin-bottom: 0.3rem;
+}
+
+.resume-bullets li:last-child {
+  margin-bottom: 0;
+}
+
+.resume-card {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 3px;
+  padding: 2rem 2.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.resume-card:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Contact Page ---------- */
+.contact-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem 1.625rem;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.contact-card:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-card:last-child {
+  margin-bottom: 0;
+}
+
+.contact-card-icon {
+  color: var(--burgundy);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.contact-card-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.contact-card-value {
+  font-size: 0.9375rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  word-break: break-all;
+  margin-bottom: 0;
+}
+
+/* ---------- Contact Form ---------- */
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.375rem;
+}
+
+.form-control {
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--text-dark);
+  background-color: #fff;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(122, 31, 43, 0.1);
+  outline: none;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background-color: var(--charcoal);
+  color: rgba(245, 241, 234, 0.55);
+  padding: 3.5rem 0 2rem;
+}
+
+.footer-brand {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--offwhite);
+  margin-bottom: 0.3rem;
+}
+
+.footer-tagline {
+  font-size: 0.8125rem;
+  color: rgba(245, 241, 234, 0.4);
+}
+
+.footer-nav a {
+  display: block;
+  font-size: 0.875rem;
+  color: rgba(245, 241, 234, 0.55);
+  text-decoration: none;
+  margin-bottom: 0.4rem;
+  transition: color var(--transition);
+}
+
+.footer-nav a:hover {
+  color: var(--offwhite);
+}
+
+.footer-social a {
+  color: rgba(245, 241, 234, 0.55);
+  font-size: 1.25rem;
+  margin-right: 1rem;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.footer-social a:hover {
+  color: var(--offwhite);
+}
+
+.footer-divider {
+  border-color: rgba(245, 241, 234, 0.1);
+  margin: 2rem 0 1.5rem;
+}
+
+.footer-copy {
+  font-size: 0.8125rem;
+  color: rgba(245, 241, 234, 0.3);
+}
+
+/* ---------- Utilities ---------- */
+.text-burgundy {
+  color: var(--burgundy) !important;
+}
+
+a {
+  color: var(--burgundy);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--burgundy-deep);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background-color: var(--charcoal);
+    padding: 1rem 0 0.5rem;
+    border-top: 1px solid rgba(245, 241, 234, 0.08);
+    margin-top: 0.75rem;
+  }
+
+  .navbar-nav .nav-link.active::after {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-section {
+    padding: 4rem 0;
+    min-height: auto;
+  }
+
+  .hero-subhead {
+    max-width: 100%;
+  }
+
+  .hero-headshot {
+    max-width: 260px;
+    margin: 2.5rem auto 0;
+  }
+
+  .page-header {
+    padding: 3.5rem 0 2.5rem;
+  }
+
+  .section-offwhite,
+  .section-warm,
+  .section-charcoal,
+  .section-charcoal-soft {
+    padding: 3.5rem 0;
+  }
+
+  .highlight-callout {
+    padding-left: 1.5rem;
+  }
+}
