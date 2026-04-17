@@ -571,6 +571,56 @@ h1, h2, h3, h4, h5, h6 {
   color: rgba(245, 241, 234, 0.3);
 }
 
+/* ---------- On-page Anchor Nav ---------- */
+.anchor-nav {
+  background-color: var(--offwhite-warm);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  padding: 0.625rem 0;
+}
+
+.anchor-nav-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.anchor-nav-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-right: 0.375rem;
+  white-space: nowrap;
+}
+
+.anchor-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 0.3rem 0.875rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+
+.anchor-link:hover {
+  color: var(--burgundy);
+  border-color: rgba(122, 31, 43, 0.35);
+  background: rgba(122, 31, 43, 0.05);
+}
+
+/* Scroll offset so sticky navbar doesn't cover anchor targets */
+#intro, #what-i-do, #competition, #facts,
+#bio, #beyond, #associations,
+#education, #experience, #leadership, #skills {
+  scroll-margin-top: 4.75rem;
+}
+
 /* ---------- Utilities ---------- */
 .text-burgundy {
   color: var(--burgundy) !important;
