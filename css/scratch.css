@@ -10,7 +10,7 @@
   --film-mid: #1E2228;
   --film-card: #252B32;
   --film-border: rgba(255, 255, 255, 0.08);
-  --film-accent: #7A1F2B;
+  --film-accent: #D94060;
   --film-gold: #C9A84C;
   --film-offwhite: #EDE9E0;
   --film-muted: rgba(237, 233, 224, 0.55);
@@ -30,7 +30,7 @@ html {
 
 /* Font color and font family definitions */
 body {
-  font-family: 'Lora', Georgia, serif;        /* literary serif for body */
+  font-family: 'Courier Prime', Georgia, serif;        /* literary serif for body */
   font-size: 1rem;
   line-height: 1.8;
   color: var(--film-offwhite);                /* light text on dark background */
@@ -185,7 +185,7 @@ li {
 }
 
 .film-hero-subtitle {
-  font-family: 'Lora', serif;
+  font-family: 'Courier Prime', serif;
   font-style: italic;
   font-size: clamp(1rem, 2vw, 1.25rem);
   color: var(--film-muted);
@@ -299,7 +299,7 @@ li {
 }
 
 .film-pullquote blockquote {
-  font-family: 'Lora', serif;
+  font-family: 'Courier Prime', serif;
   font-style: italic;
   font-size: 1.25rem;
   line-height: 1.65;
@@ -365,7 +365,7 @@ li {
 }
 
 .film-craft-list ul li {
-  font-family: 'Lora', serif;
+  font-family: 'Courier Prime', serif;
   font-size: 0.9375rem;
   color: var(--film-muted);
   margin-bottom: 0.2rem;
