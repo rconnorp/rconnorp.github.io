@@ -525,6 +525,30 @@ img { max-width: 100%; display: block; }
 }
 .contact-note i { color: var(--accent); }
 
+/* Copy-email chip on the Email card (works for everyone, no mail app needed) */
+.contact-link-row { position: relative; margin-bottom: 1rem; }
+.contact-link-row .contact-link { margin-bottom: 0; padding-right: 6rem; }
+.contact-copy {
+  position: absolute;
+  top: 50%; right: 1.1rem;
+  transform: translateY(-50%);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.82rem; font-weight: 500;
+  letter-spacing: -0.01em;
+  padding: 0.42rem 0.8rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.contact-copy:hover { background: #fff; color: var(--accent); border-color: var(--accent); }
+.contact-copy.is-copied { background: #e8f5ec; color: #14722e; border-color: #14722e; }
+.contact-copy i { font-size: 0.95rem; }
+
 /* form */
 .form-card {
   background: #fff;
@@ -554,6 +578,23 @@ img { max-width: 100%; display: block; }
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(0,113,227,0.45);
 }
+
+/* contact form helper + submit status */
+.form-hint {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+.form-status {
+  margin: 0.55rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  min-height: 1.2em;
+  color: var(--text-2);
+}
+.form-status.ok  { color: #14722e; }   /* AA-readable green on white */
+.form-status.err { color: #c4314b; }   /* AA-readable red on white */
 
 /* Visible keyboard focus on every interactive control (keyboard-only) */
 :focus-visible {

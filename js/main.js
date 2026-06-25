@@ -296,4 +296,99 @@
     el.textContent = String(new Date().getFullYear());
   });
 
+  /* ---------- contact form → opens a pre-filled email (no backend) ----------
+     Pure client-side: builds a mailto: with the visitor's name, email, and
+     message, and opens their mail app. No server, no third-party service.
+     Native field validation (required) runs before this handler fires. */
+  var cform = document.getElementById('contact-form');
+  var cstatus = document.getElementById('form-status');
+  var CONTACT_EMAIL = 'rconnor.p28@gmail.com';
+  if (cform) {
+    cform.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var field = function (n) {
+        var el = cform.querySelector('[name="' + n + '"]');
+        return el && el.value ? el.value.trim() : '';
+      };
+      var name = field('name'), email = field('email');
+      var subject = field('subject') || ('Portfolio inquiry' + (name ? ' from ' + name : ''));
+      var message = field('message').replace(/\r\n|\r|\n/g, '\r\n');  // normalize line endings
+      var body = [
+        message,
+        '',
+        '---',
+        'From: ' + (name || '(not provided)'),
+        'Reply to: ' + (email || '(not provided)')
+      ].join('\r\n');
+
+      if (!message) {
+        if (cstatus) {
+          cstatus.textContent = 'Please add a message before sending.';
+          cstatus.className = 'form-status err';
+        }
+        return;
+      }
+
+      var href = 'mailto:' + CONTACT_EMAIL +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+
+      // mailto: links can be silently truncated past ~2000 chars (Outlook/Windows).
+      if (href.length > 1900) {
+        if (cstatus) {
+          cstatus.textContent = 'That message is a little long to open in an email app. Please shorten it, or email ' + CONTACT_EMAIL + ' directly.';
+          cstatus.className = 'form-status err';
+        }
+        return;
+      }
+
+      if (cstatus) {
+        cstatus.textContent = 'Opening your email app… if nothing happens, email ' + CONTACT_EMAIL + ' directly.';
+        cstatus.className = 'form-status';
+      }
+      window.location.href = href;
+    });
+  }
+
+  /* ---------- copy-email button (works for everyone, no mail app needed) ---------- */
+  function legacyCopy(text) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'absolute';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      return true;
+    } catch (err) { return false; }
+  }
+
+  document.querySelectorAll('[data-copy-email]').forEach(function (btn) {
+    var label = btn.querySelector('.contact-copy-text');
+    var resetTimer = null;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var email = btn.getAttribute('data-copy-email');
+      var confirm = function () {
+        if (label) label.textContent = 'Copied!';
+        btn.classList.add('is-copied');
+        if (resetTimer) window.clearTimeout(resetTimer);
+        resetTimer = window.setTimeout(function () {
+          if (label) label.textContent = 'Copy';
+          btn.classList.remove('is-copied');
+        }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(confirm, function () {
+          if (legacyCopy(email)) confirm();
+        });
+      } else if (legacyCopy(email)) {
+        confirm();
+      }
+    });
+  });
+
 })();

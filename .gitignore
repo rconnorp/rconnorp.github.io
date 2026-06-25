@@ -6,3 +6,6 @@ Thumbs.db
 img/headshot.png
 Connor P. (Updated).png
 .claude/
+
+# Local-only safekeeping of originals / superseded files (not deployed)
+archive/

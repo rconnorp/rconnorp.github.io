@@ -7,6 +7,51 @@
   <script>document.documentElement.classList.add('js');</script>
   <title>Connor Peterson — Finance &amp; Entertainment Media</title>
   <meta name="description" content="Connor Peterson — finance student at BYU focused on entertainment media investment, M&amp;A, and visual production.">
+  <meta name="author" content="Connor Peterson">
+  <meta name="theme-color" content="#0071e3">
+  <link rel="canonical" href="https://rconnorp.github.io/">
+
+  <!-- Favicons -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Open Graph (LinkedIn, iMessage, Slack, Facebook) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Connor Peterson">
+  <meta property="og:title" content="Connor Peterson — Finance &amp; Entertainment Media">
+  <meta property="og:description" content="Finance student at BYU — equity research, M&amp;A, and the capital behind storytelling. 1st place, Sunoco Case Competition.">
+  <meta property="og:url" content="https://rconnorp.github.io/">
+  <meta property="og:image" content="https://rconnorp.github.io/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Connor Peterson — Finance &amp; Entertainment Media">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Connor Peterson — Finance &amp; Entertainment Media">
+  <meta name="twitter:description" content="Finance student at BYU — equity research, M&amp;A, and the capital behind storytelling.">
+  <meta name="twitter:image" content="https://rconnorp.github.io/img/og.jpg">
+
+  <!-- Structured data: who Google thinks this page is about -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Connor Peterson",
+    "url": "https://rconnorp.github.io/",
+    "image": "https://rconnorp.github.io/img/og.jpg",
+    "jobTitle": "Finance Student",
+    "description": "Finance student at Brigham Young University focused on entertainment media investment, M&A, equity research, and visual production.",
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Brigham Young University" },
+    "homeLocation": { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Provo", "addressRegion": "UT", "addressCountry": "US" } },
+    "knowsLanguage": ["English", "Spanish"],
+    "sameAs": [
+      "https://linkedin.com/in/connor-peterson-840009235",
+      "https://github.com/rconnorp"
+    ]
+  }
+  </script>
 
   <!-- Bootstrap 5 (grid + utilities) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -354,13 +399,19 @@
         </div>
         <div class="row g-5">
           <div class="col-lg-5 reveal">
-            <a href="mailto:rconnor.p28@gmail.com" class="contact-link">
-              <span class="contact-ico"><i class="bi bi-envelope-fill" aria-hidden="true"></i></span>
-              <span>
-                <span class="contact-link-label">Email</span>
-                <span class="contact-link-value d-block">rconnor.p28@gmail.com</span>
-              </span>
-            </a>
+            <div class="contact-link-row">
+              <a href="mailto:rconnor.p28@gmail.com" class="contact-link">
+                <span class="contact-ico"><i class="bi bi-envelope-fill" aria-hidden="true"></i></span>
+                <span>
+                  <span class="contact-link-label">Email</span>
+                  <span class="contact-link-value d-block">rconnor.p28@gmail.com</span>
+                </span>
+              </a>
+              <button type="button" class="contact-copy" data-copy-email="rconnor.p28@gmail.com" aria-label="Copy email address">
+                <i class="bi bi-clipboard" aria-hidden="true"></i>
+                <span class="contact-copy-text">Copy</span>
+              </button>
+            </div>
             <a href="https://linkedin.com/in/connor-peterson-840009235" target="_blank" rel="noopener" class="contact-link">
               <span class="contact-ico"><i class="bi bi-linkedin" aria-hidden="true"></i></span>
               <span>
@@ -383,9 +434,10 @@
 
           <div class="col-lg-7 reveal" data-delay="1">
             <div class="form-card">
-              <!-- mailto form. To upgrade to async submissions, sign up at formspree.io
-                   and replace the action URL with your Formspree endpoint. -->
-              <form action="mailto:rconnor.p28@gmail.com" method="post" enctype="text/plain" aria-label="Contact form">
+              <!-- No backend, no third-party service. On submit, JS opens the
+                   visitor's own email app with a message pre-filled to Connor.
+                   The Email contact card is the universal fallback. -->
+              <form id="contact-form" action="mailto:rconnor.p28@gmail.com" method="post" enctype="text/plain" aria-label="Contact form">
                 <div class="row g-3">
                   <div class="col-sm-6">
                     <label for="contact-name" class="form-label">Name</label>
@@ -401,10 +453,12 @@
                   </div>
                   <div class="col-12">
                     <label for="contact-message" class="form-label">Message</label>
-                    <textarea id="contact-message" name="message" class="form-control" rows="5" placeholder="Your message here..." required></textarea>
+                    <textarea id="contact-message" name="message" class="form-control" rows="5" placeholder="Your message here..." maxlength="1500" required></textarea>
                   </div>
                   <div class="col-12">
-                    <button type="submit" class="btn-apple"><i class="bi bi-send" aria-hidden="true"></i> Send Message</button>
+                    <button type="submit" class="btn-apple" aria-describedby="contact-hint"><i class="bi bi-send" aria-hidden="true"></i> Send Message</button>
+                    <p class="form-hint" id="contact-hint">Opens a pre-filled email in your mail app, ready for you to send.</p>
+                    <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
                   </div>
                 </div>
               </form>
