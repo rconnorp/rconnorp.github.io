@@ -19,6 +19,8 @@
 
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function easeOutExpo(p) { return p >= 1 ? 1 : 1 - Math.pow(2, -10 * p); }
+  /* comma-grouped integers ($925,000,000); decimals keep toFixed */
+  function fmt(n, decimals) { return decimals > 0 ? n.toFixed(decimals) : Math.round(n).toLocaleString('en-US'); }
 
   docEl.classList.toggle('motion-ok', motionOK);
 
@@ -34,8 +36,9 @@
   var workSpot   = document.querySelector('.work-spotlight');
   var metricEls  = workEl ? Array.prototype.slice.call(workEl.querySelectorAll('.metric')) : [];
   var progressEl = document.querySelector('.nav-progress');
+  var darkEls    = Array.prototype.slice.call(document.querySelectorAll('.hero, .sec-dark, .site-footer'));
 
-  var revealEls    = Array.prototype.slice.call(document.querySelectorAll('.reveal, .reveal-scale'));
+  var revealEls    = Array.prototype.slice.call(document.querySelectorAll('.reveal, .reveal-scale, .reveal-soft'));
   var timerCounters = Array.prototype.slice.call(document.querySelectorAll('.stat-value[data-count-to]'));
 
   /* ---------- mobile nav toggle ---------- */
@@ -73,14 +76,14 @@
     var target = parseFloat(el.getAttribute('data-count-to'));
     var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
     var num = buildCounter(el);
-    if (reduceMotion || document.hidden) { num.textContent = target.toFixed(decimals); return; }
+    if (reduceMotion || document.hidden) { num.textContent = fmt(target, decimals); return; }
     var duration = 1500, startTime = null;
     var step = function (ts) {
       if (startTime === null) startTime = ts;
       var p = Math.min((ts - startTime) / duration, 1);
-      num.textContent = (target * easeOutExpo(p)).toFixed(decimals);
+      num.textContent = fmt(target * easeOutExpo(p), decimals);
       if (p < 1) requestAnimationFrame(step);
-      else num.textContent = target.toFixed(decimals);
+      else num.textContent = fmt(target, decimals);
     };
     requestAnimationFrame(step);
   }
@@ -131,6 +134,13 @@
       }
       newly.forEach(function (el, k) {
         el.style.setProperty('--reveal-i', k);
+        /* promote a layer only for the element(s) about to animate;
+           cleared again on transitionend — never a blanket promotion.
+           Skipped under reduced motion: nothing transitions, so nothing
+           would fire transitionend to release the layer. */
+        if (!reduceMotion) {
+          el.style.willChange = el.classList.contains('reveal') ? 'opacity, transform, filter' : 'opacity, transform';
+        }
         el.classList.add('is-visible');
         var ix = revealEls.indexOf(el);
         if (ix >= 0) revealEls.splice(ix, 1);
@@ -168,24 +178,31 @@
       workStage.style.setProperty('--p', p.toFixed(4));
       if (workEl) workEl.style.setProperty('--enter', clamp((vh - wr.top) / vh, 0, 1).toFixed(4));
       var active = p > 0 && p < 1;
+      /* spec-row metrics resolve sequentially at p 0.70 / 0.76 / 0.82 / 0.88 */
       for (var m = 0; m < metricEls.length; m++) {
-        var mp = clamp((p - m * 0.18) / 0.46, 0, 1);
+        var mp = clamp((p - (0.70 + m * 0.06)) / 0.12, 0, 1);
         var e = easeOutExpo(mp);
         metricEls[m].style.opacity = e.toFixed(3);
         metricEls[m].style.transform = 'translateY(' + ((1 - e) * 26).toFixed(1) + 'px)';
         metricEls[m].style.willChange = active ? 'transform, opacity' : '';
       }
+      /* the $925,000,000 build: digits earned over p 0.22–0.72,
+         quantized to 48 steps so they tick into place, never smear */
       if (dealNum) {
-        var dp = clamp((p - 2 * 0.18) / 0.46, 0, 1);
-        dealNum.textContent = String(Math.round(dealTarget * easeOutExpo(dp)));
+        var dp = clamp((p - 0.22) / 0.5, 0, 1);
+        dp = Math.round(dp * 48) / 48;
+        dealNum.textContent = fmt(dealTarget * easeOutExpo(dp), 0);
       }
     }
 
-    /* nav goes dark while #work fills the nav band */
-    if (nav && workEl) {
-      var br = workEl.getBoundingClientRect();
-      var nH = nav.offsetHeight;
-      nav.classList.toggle('nav-on-dark', br.top <= nH && br.bottom > nH);
+    /* nav goes dark while ANY dark chapter (hero, .sec-dark, footer) fills the nav band */
+    if (nav && darkEls.length) {
+      var nH = nav.offsetHeight, onDark = false;
+      for (var d = 0; d < darkEls.length; d++) {
+        var dr = darkEls[d].getBoundingClientRect();
+        if (dr.top <= nH && dr.bottom > nH) { onDark = true; break; }
+      }
+      nav.classList.toggle('nav-on-dark', onDark);
     }
 
     /* slim scroll-progress rail */
@@ -250,17 +267,15 @@
   }
 
   /* ---------- hero entrance hand-off ----------
-     After the load-in animation, drop the .hero-anim/.is-entering
-     classes so the scroll-parallax transforms can take over the
-     same elements without fighting animation fill-mode. */
+     After the load-in animation, drop the .hero-anim classes so the
+     scroll-parallax transforms can take over the same elements
+     without fighting animation fill-mode. */
   if (!reduceMotion) {
     window.setTimeout(function () {
       document.querySelectorAll('.hero-anim').forEach(function (el) {
         el.classList.remove('hero-anim', 'd1', 'd2', 'd3', 'd4', 'd5');
       });
-      var portrait = document.querySelector('.hero-portrait');
-      if (portrait) portrait.classList.remove('is-entering');
-    }, 1850);
+    }, 1650);   /* ships with the CSS delay ladder: d5 ends at 1.45s */
   }
 
   /* ---------- pointer lighting (desktop, fine pointer only) ---------- */
@@ -290,6 +305,66 @@
       });
     }
   }
+
+  /* ---------- same-page anchor scrolling ----------
+     JS-driven with a capped duration: CSS scroll-behavior:smooth stalls on
+     very tall pages in Chrome (a stuck native animation then swallows every
+     later scroll), and a fixed ~600ms glide feels right regardless of
+     distance. Reduced-motion and no-rAF users get an instant jump. */
+  (function () {
+    var scrollAnim = null;
+    var watchdog = null;
+    var cancelAnim = function () {
+      if (scrollAnim !== null) { window.cancelAnimationFrame(scrollAnim); scrollAnim = null; }
+      if (watchdog !== null) { window.clearTimeout(watchdog); watchdog = null; }
+    };
+    window.addEventListener('wheel', cancelAnim, { passive: true });
+    window.addEventListener('touchstart', cancelAnim, { passive: true });
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var id = link.getAttribute('href').slice(1);
+        var target = id ? document.getElementById(id) : null;
+        if (!target) return;                    // unknown anchor: browser default
+        e.preventDefault();
+        cancelAnim();
+        if (window.history && history.pushState) history.pushState(null, '', '#' + id);
+
+        var margin = parseFloat(window.getComputedStyle(target).scrollMarginTop) || 0;
+        var startY = window.scrollY;
+        var maxY = (docEl.scrollHeight - window.innerHeight) || 0;
+        var endY = clamp(target.getBoundingClientRect().top + startY - margin, 0, maxY);
+        var settle = function () {
+          target.setAttribute('tabindex', '-1');
+          target.focus({ preventScroll: true });
+        };
+
+        /* rAF doesn't tick in hidden tabs, so animate only when visible */
+        if (rmQuery.matches || document.hidden || !('requestAnimationFrame' in window)) {
+          window.scrollTo(0, endY);
+          settle();
+          return;
+        }
+        var dist = endY - startY;
+        var duration = clamp(Math.abs(dist) * 0.1, 350, 700);
+        var t0 = null;
+        var step = function (ts) {
+          if (t0 === null) t0 = ts;
+          var p = Math.min((ts - t0) / duration, 1);
+          var eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;  // easeInOutQuad
+          window.scrollTo(0, startY + dist * eased);
+          if (p < 1) { scrollAnim = requestAnimationFrame(step); }
+          else { cancelAnim(); settle(); }
+        };
+        scrollAnim = requestAnimationFrame(step);
+        /* rAF only ticks while the page is actually rendering (an occluded
+           window stops it mid-flight) — guarantee the landing regardless */
+        watchdog = window.setTimeout(function () {
+          if (scrollAnim !== null) { cancelAnim(); window.scrollTo(0, endY); settle(); }
+        }, duration + 300);
+      });
+    });
+  })();
 
   /* ---------- current year ---------- */
   document.querySelectorAll('.js-year').forEach(function (el) {
