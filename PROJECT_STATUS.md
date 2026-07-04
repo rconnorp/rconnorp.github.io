@@ -3,8 +3,8 @@
 ## What this is
 Single-page personal portfolio for Connor Peterson at https://rconnorp.github.io/ (GitHub Pages, deploys from `main`). The live deliverable is `index.html` + `css/bootstrap-custom.css` + `js/main.js`. This folder IS its own git repo.
 
-## Current state — "The Keynote" Apple redesign (2026-07-03/04, NOT yet committed or pushed)
-The site was fully redesigned to a genuine Apple-product-page aesthetic via a 21-agent workflow (3 design concepts → 3-lens judge panel → synthesis → implementation → 5-dimension adversarial review → fixes), followed by live browser verification and scroll fixes. All changes sit uncommitted in the working tree on top of published commit `d9bd29b`. The live site still shows the OLD design until committed + pushed.
+## Current state — "The Keynote" Apple redesign (PUBLISHED 2026-07-04, commit `89dce33`)
+Live at https://rconnorp.github.io/ — verified deployed (new HTML + new og.jpg both serving). The site was fully redesigned to a genuine Apple-product-page aesthetic via a 21-agent workflow (3 design concepts → 3-lens judge panel → synthesis → implementation → 5-dimension adversarial review → fixes), followed by live browser verification and scroll fixes. 
 
 Design: keynote structure — dark hero stage (gradient "Connor Peterson." name reveal, "Building the models behind the movies."), light Focus section, dark pinned Work chapter (scroll-scrubbed $925,000,000 figure + metric spec row), light About (framed portrait), NEW dark Media section (IMAX $57 / 360% stats), light Resume, dark "One more thing" Contact, footnote footer. SF Pro system stack, blue-only accent (single pink→violet note in Media), noise-textured dark stages, glass nav that adapts light/dark per section.
 
@@ -25,8 +25,8 @@ Design: keynote structure — dark hero stage (gradient "Connor Peterson." name 
   Verified in Chrome: all six nav anchors land correctly; zero console errors; $925M scrub, reveals, glass nav, light/dark sections all render as designed.
 
 ## Open items
-- [ ] **Commit + push to publish** — awaiting Connor's go-ahead (user-Pages repo deploys from `main`).
-- [ ] `img/og.jpg` still shows the old light hero — link previews (LinkedIn/iMessage) won't match the new dark design until regenerated (~1200×630 crop of the new hero).
+- [x] Commit + push — published 2026-07-04 as `89dce33`, deployment verified live.
+- [x] `img/og.jpg` regenerated 2026-07-04 — 1200×630 dark keynote card (headless-Chrome render of a dedicated card matching the hero), live.
 - [ ] Mobile-width visual pass was only spot-checked (hamburger/dark-glass menu variant exists in CSS); worth a quick phone check after publish.
 
-Last updated: 2026-07-04 (Apple redesign + scroll fixes, uncommitted)
+Last updated: 2026-07-04 (Keynote redesign published, `89dce33`)
