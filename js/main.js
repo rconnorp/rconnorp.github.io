@@ -30,7 +30,7 @@
   var navLinks   = document.getElementById('nav-links');
   var heroEl     = document.querySelector('.hero');
   var cueEl      = document.querySelector('.scroll-cue');
-  var workEl     = document.getElementById('work');
+  var workEl     = document.getElementById('competitions');
   var workTrack  = document.querySelector('.work-track');
   var workStage  = document.querySelector('.work-stage');
   var workSpot   = document.querySelector('.work-spotlight');
@@ -38,7 +38,7 @@
   var progressEl = document.querySelector('.nav-progress');
   var darkEls    = Array.prototype.slice.call(document.querySelectorAll('.hero, .sec-dark, .site-footer'));
 
-  var revealEls    = Array.prototype.slice.call(document.querySelectorAll('.reveal, .reveal-scale, .reveal-soft'));
+  var revealEls    = Array.prototype.slice.call(document.querySelectorAll('.reveal, .reveal-scale, .reveal-soft, .rule-draw'));
   var timerCounters = Array.prototype.slice.call(document.querySelectorAll('.stat-value[data-count-to]'));
 
   /* ---------- mobile nav toggle ---------- */
@@ -218,10 +218,8 @@
         var sr = spySections[s].sec.getBoundingClientRect();
         if (sr.top <= mark && sr.bottom > mark) currentLink = spySections[s].link;
       }
-      if (currentLink) {
-        spyLinks.forEach(function (l) { l.classList.remove('active'); });
-        currentLink.classList.add('active');
-      }
+      spyLinks.forEach(function (l) { l.classList.remove('active'); });
+      if (currentLink) currentLink.classList.add('active');
     }
   }
 
@@ -266,21 +264,9 @@
     check();
   }
 
-  /* ---------- hero entrance hand-off ----------
-     After the load-in animation, drop the .hero-anim classes so the
-     scroll-parallax transforms can take over the same elements
-     without fighting animation fill-mode. */
-  if (!reduceMotion) {
-    window.setTimeout(function () {
-      document.querySelectorAll('.hero-anim').forEach(function (el) {
-        el.classList.remove('hero-anim', 'd1', 'd2', 'd3', 'd4', 'd5');
-      });
-    }, 1650);   /* ships with the CSS delay ladder: d5 ends at 1.45s */
-  }
-
   /* ---------- pointer lighting (desktop, fine pointer only) ---------- */
   if (canHover && !reduceMotion) {
-    document.querySelectorAll('.feature-tile, .fact, .resume-item, .contact-link').forEach(function (card) {
+    document.querySelectorAll('.feature-tile, .fact, .contact-link, .otc-tile').forEach(function (card) {
       card.addEventListener('mousemove', function (ev) {
         var r = card.getBoundingClientRect();
         card.style.setProperty('--mx', ((ev.clientX - r.left) / r.width * 100).toFixed(1) + '%');
@@ -360,11 +346,26 @@
         /* rAF only ticks while the page is actually rendering (an occluded
            window stops it mid-flight) — guarantee the landing regardless */
         watchdog = window.setTimeout(function () {
-          if (scrollAnim !== null) { cancelAnim(); window.scrollTo(0, endY); settle(); }
+          if (scrollAnim !== null) { cancelAnim(); window.scrollTo({ top: endY, behavior: 'instant' }); settle(); }
         }, duration + 300);
       });
     });
   })();
+
+  /* ---------- career timeline: details start collapsed, toggle on click ----------
+     The HTML ships with every list expanded so the page reads fine without JS. */
+  document.querySelectorAll('.tl-toggle').forEach(function (btn) {
+    var list = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!list) return;
+    list.hidden = true;
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      list.hidden = open;
+      if (window.ScrollTrigger && window.ScrollTrigger.refresh) window.ScrollTrigger.refresh();
+    });
+  });
 
   /* ---------- current year ---------- */
   document.querySelectorAll('.js-year').forEach(function (el) {
@@ -377,7 +378,7 @@
      Native field validation (required) runs before this handler fires. */
   var cform = document.getElementById('contact-form');
   var cstatus = document.getElementById('form-status');
-  var CONTACT_EMAIL = 'rconnor.p28@gmail.com';
+  var CONTACT_EMAIL = 'rconnorp@byu.edu';
   if (cform) {
     cform.addEventListener('submit', function (e) {
       e.preventDefault();

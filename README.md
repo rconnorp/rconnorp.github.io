@@ -1,6 +1,6 @@
 # Connor Peterson — Portfolio Website
 
-Personal portfolio site for Connor Peterson, BYU Pre-Business undergraduate (Finance focus).
+Personal portfolio site for Connor Peterson, BYU Pre-Business undergraduate.
 
 **Live site:** https://rconnorp.github.io/
 
