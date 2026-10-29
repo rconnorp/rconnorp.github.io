@@ -367,21 +367,6 @@
     });
   })();
 
-  /* ---------- career timeline: details start collapsed, toggle on click ----------
-     The HTML ships with every list expanded so the page reads fine without JS. */
-  document.querySelectorAll('.tl-toggle').forEach(function (btn) {
-    var list = document.getElementById(btn.getAttribute('aria-controls'));
-    if (!list) return;
-    list.hidden = true;
-    btn.setAttribute('aria-expanded', 'false');
-    btn.addEventListener('click', function () {
-      var open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
-      list.hidden = open;
-      if (window.ScrollTrigger && window.ScrollTrigger.refresh) window.ScrollTrigger.refresh();
-    });
-  });
-
   /* ---------- current year ---------- */
   document.querySelectorAll('.js-year').forEach(function (el) {
     el.textContent = String(new Date().getFullYear());
@@ -402,7 +387,7 @@
         return el && el.value ? el.value.trim() : '';
       };
       var name = field('name'), email = field('email');
-      var subject = field('subject') || ('Portfolio inquiry' + (name ? ' from ' + name : ''));
+      var subject = 'Message from ' + (name || 'a visitor') + ' via your website';
       var message = field('message').replace(/\r\n|\r|\n/g, '\r\n');  // normalize line endings
       var body = [
         message,

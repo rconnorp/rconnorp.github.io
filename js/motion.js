@@ -94,10 +94,9 @@
     });
   }
 
-  /* Off the clock tiles and deal tombstones: staggered entrance.
-     Uses the `translate` property so it never fights the tombstone tilt. */
+  /* Off the clock tiles and the competition card: staggered entrance. */
   function staggerTiles() {
-    var els = all('.otc-tile, .tombstone');
+    var els = all('.otc-tile, .comp-card');
     if (!els.length) return;
     gsap.set(els, { opacity: 0, translate: '0 24px' });
     ScrollTrigger.batch(els, {
@@ -108,24 +107,6 @@
           stagger: 0.08, overwrite: true, clearProps: 'opacity,translate'
         });
       }
-    });
-  }
-
-  /* Tombstones tilt toward the pointer and catch a sheen (desktop only). */
-  function tombstoneTilt() {
-    all('.tombstone[data-tilt]').forEach(function (card) {
-      var rx = gsap.quickTo(card, 'rotateX', { duration: 0.5, ease: 'power3.out' });
-      var ry = gsap.quickTo(card, 'rotateY', { duration: 0.5, ease: 'power3.out' });
-      var sheen = gsap.quickTo(card, '--sheen', { duration: 0.5, ease: 'power3.out' });
-      card.addEventListener('pointermove', function (e) {
-        var r = card.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width;
-        var py = (e.clientY - r.top) / r.height;
-        ry((px - 0.5) * 12);
-        rx((0.5 - py) * 12);
-        sheen(px);
-      });
-      card.addEventListener('pointerleave', function () { rx(0); ry(0); sheen(0); });
     });
   }
 
@@ -141,7 +122,6 @@
     headingReveals();
     timelineDraw();
     staggerTiles();
-    if (c.desktop) tombstoneTilt();
     /* Cursor spotlight on the dark chapter already lives in main.js (.work-spotlight). */
   });
 

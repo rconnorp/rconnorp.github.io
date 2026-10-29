@@ -661,77 +661,23 @@ sup.fn {
 .fact-title { font-size: 1.15rem; font-weight: 600; line-height: 1.25; margin-bottom: 0.1rem; }
 .fact-text { font-size: 0.95rem; color: var(--text-2); line-height: 1.5; }
 
-/* ---------- Competitions — deal tombstones ---------- */
-.tombstones-wrap { padding-block: 5rem 7rem; position: relative; z-index: 1; }
-.tombstones {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  max-width: 880px;
-  margin-inline: auto;
-  perspective: 1200px;
-}
-.tombstone {
-  --sheen: 0;
-  position: relative;
-  overflow: hidden;
-  display: flex; flex-direction: column; justify-content: center;
+/* ---------- Competitions — quiet footnote card ---------- */
+.comp-wrap { padding-block: 4rem 6rem; position: relative; z-index: 1; }
+.comp-card {
+  max-width: 560px; margin-inline: auto;
+  padding: 1.75rem 2rem;
   text-align: center;
-  min-height: 21rem;
-  padding: 2.75rem 2.25rem;
-  background: linear-gradient(160deg, #232326 0%, #161617 100%);
-  border: 1px solid rgba(255,255,255,0.24);
+  background: var(--bg-dark-2);
+  border: 1px solid var(--border-dark);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-dark);
-  transform-style: preserve-3d;
-  will-change: auto;
 }
-.tombstone::before {               /* the inner rule of a framed announcement card */
-  content: '';
-  position: absolute; inset: 9px;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: calc(var(--radius) - 7px);
-  pointer-events: none;
+.comp-card-label {
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-on-dark-2); margin: 0 0 0.5rem;
 }
-.tombstone::after {                /* sheen — opacity driven by --sheen (0-1) from the motion layer */
-  content: '';
-  position: absolute; inset: 0;
-  pointer-events: none;
-  background: linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.10) 50%, transparent 68%);
-  opacity: var(--sheen, 0);
-  transform: translateX(calc((var(--sheen, 0) - 0.5) * 60%));
-}
-.tombstone > * { position: relative; z-index: 1; }
-.ts-name, .ts-verb, .ts-meta {
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.12em;
-  font-size: 1.05rem;
-  color: var(--text-on-dark-2);
-  margin: 0;
-}
-.ts-verb { margin-top: 0.15rem; }
-.ts-name { color: var(--text-on-dark); font-weight: 600; font-size: 1.15rem; }
-.ts-target {
-  font-size: clamp(1.9rem, 3.4vw, 2.4rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: #fff;
-  margin: 0.55rem 0 0.9rem;
-}
-.ts-figure {
-  font-size: clamp(1.5rem, 2.8vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  font-variant-numeric: tabular-nums;
-  color: var(--accent-bright);
-  margin: 0 0 1.2rem;
-}
-.ts-meta { font-size: 0.98rem; letter-spacing: 0.1em; line-height: 1.5; max-width: 38ch; margin-inline: auto; text-wrap: balance; }
-.nowrap { white-space: nowrap; }
-.ts-meta-sub { margin-top: 0.15rem; }
-.ts-figure + .ts-verb { margin-bottom: 1.2rem; }
-.tombstone sup.fn { color: var(--text-on-dark-2); }
+.comp-card-title { font-size: 1.2rem; font-weight: 600; line-height: 1.3; color: var(--text-on-dark); margin: 0 0 0.6rem; text-wrap: balance; }
+.comp-card-line { font-size: 1rem; line-height: 1.5; color: var(--text-on-dark-2); margin: 0; }
+.comp-card sup.fn { color: var(--text-on-dark-2); }
 
 /* ---------- Experience — career timeline ---------- */
 .timeline-wrap { position: relative; max-width: 960px; margin-inline: auto; }
@@ -773,36 +719,6 @@ sup.fn {
 .tl-where { display: block; font-size: 0.88rem; font-weight: 400; letter-spacing: 0; color: var(--text-muted); margin-top: 0.2rem; }
 .tl-role { font-size: 1rem; font-weight: 500; color: var(--accent-a11y); margin-bottom: 0.7rem; }
 .tl-summary { font-size: 1.0625rem; line-height: 1.5; color: var(--text-muted); }
-.tl-toggle {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  margin-top: 0.8rem; padding: 0.6rem 0; min-height: 44px;
-  background: none; border: none;
-  font-family: var(--font-sans); font-size: 0.9rem; font-weight: 500;
-  color: var(--accent-a11y);
-  cursor: pointer;
-}
-.tl-toggle::after {
-  content: '';
-  width: 7px; height: 7px;
-  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
-  transform: translateY(-2px) rotate(45deg);
-  transition: transform 0.25s var(--ease);
-}
-.tl-toggle[aria-expanded="true"]::after { transform: translateY(1px) rotate(-135deg); }
-.tl-toggle:hover { color: var(--accent-a11y); text-decoration: underline; }
-html:not(.js) .tl-toggle { display: none; }   /* nothing to toggle: details stay open */
-.tl-details { list-style: none; margin: 0.75rem 0 0; padding: 0.9rem 0 0; border-top: 1px solid var(--hairline); }
-html:not(.js) .tl-details { margin-top: 1rem; }
-.tl-details li {
-  position: relative; padding-left: 1.2rem;
-  font-size: 0.98rem; line-height: 1.5; color: var(--text-muted);
-  margin-bottom: 0.45rem;
-}
-.tl-details li:last-child { margin-bottom: 0; }
-.tl-details li::before {
-  content: ''; position: absolute; left: 0.1rem; top: 0.6em;
-  width: 5px; height: 5px; border-radius: 50%; background: var(--text-3);
-}
 
 /* ---------- Off the clock — tile grid ---------- */
 .otc-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
@@ -1138,8 +1054,8 @@ html:not(.js) .tl-details { margin-top: 1rem; }
   #experience { padding: 6rem 0 4.5rem; }
   #about { padding: 4.5rem 0 6rem; }
   #competitions { padding: 4.5rem 0 0; }
-  .tombstones-wrap { padding-block: 3rem 4.5rem; }
-  .tombstone { min-height: 0; padding: 2.5rem 1.5rem; }
+  .comp-wrap { padding-block: 2.5rem 4rem; }
+  .comp-card { padding: 1.5rem 1.25rem; }
   .sec-head { margin-bottom: 2.5rem; }
   .sec-head.center { margin-bottom: 3rem; }
 
@@ -1183,9 +1099,8 @@ html:not(.js) .tl-details { margin-top: 1rem; }
 
   .sec-seam::before, .sec-seam::after { height: 90px; }
 
-  .deal-metrics { flex-wrap: wrap; gap: 1.75rem 0; }
-  .deal-metrics .metric { flex: 0 0 50%; padding: 0 0.5rem; }
-  .deal-metrics .metric + .metric { border-left: none; }
+  .deal-metrics { flex-wrap: nowrap; }
+  .deal-metrics .metric { flex: 1 1 0; min-width: 0; padding: 0 0.4rem; }
 
   .portrait-frame { max-width: 380px; margin: 0 auto 2.5rem; }
   .fact { padding-left: 1.1rem; }
@@ -1291,9 +1206,6 @@ html:not(.js) .tl-details { margin-top: 1rem; }
   .otc-grid { grid-template-columns: repeat(2, 1fr); }
   .otc-wide { grid-column: 1 / -1; }
 }
-@media (min-width: 768px) {
-  .tombstones { grid-template-columns: 1fr 1fr; }
-}
 @media (min-width: 992px) {
   .otc-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
   .otc-wide { grid-column: span 2; }
@@ -1326,8 +1238,6 @@ html:not(.js) .tl-details { margin-top: 1rem; }
 
 /* ---------- Motion layer (GSAP) ---------- */
 html.motion-ready .tl-line-fill { transform-origin: top center; }
-html.motion-ready .tombstones { perspective: 1200px; }
-html.motion-ready .tombstone { will-change: transform; }
 /* SplitText wraps hero chars; keep the gradient name painting through the split */
 html.motion-ready .hero-title.grad-text { background: none; }
 html.motion-ready .hero-title .hero-char {
@@ -1350,6 +1260,5 @@ html.hero-prehide .hero-lead, html.hero-prehide .hero-cta { visibility: hidden; 
 html.js-failed .reveal, html.js-failed .reveal-soft, html.js-failed .reveal-scale, html.js-failed .rule-draw {
   opacity: 1 !important; transform: none !important; filter: none !important;
 }
-html.js-failed .tl-toggle { display: none; }
 html.js-failed.hero-prehide .hero-title, html.js-failed.hero-prehide .hero-eyebrow, html.js-failed.hero-prehide .hero-sub,
 html.js-failed.hero-prehide .hero-lead, html.js-failed.hero-prehide .hero-cta { visibility: visible; }
