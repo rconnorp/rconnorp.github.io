@@ -257,7 +257,7 @@ sup.fn {
   transition: background 0.2s var(--ease), transform 0.2s var(--ease);
   white-space: nowrap;
 }
-.btn-apple:hover { background: var(--accent-hover); color: #fff; transform: scale(1.03); }
+.btn-apple:hover { background: var(--accent-press); color: #fff; transform: scale(1.03); }
 .btn-apple:active { background: var(--accent-press); transform: scale(0.99); }
 
 .btn-apple-text {
@@ -411,7 +411,7 @@ sup.fn {
   border-color: var(--border-dark);
   color: var(--text-on-dark);
 }
-.sec-dark .form-control::placeholder { color: rgba(235,235,245,0.45); }
+.sec-dark .form-control::placeholder { color: var(--text-on-dark-2); }
 .sec-dark .form-control:focus {
   border-color: var(--accent-bright);
   box-shadow: 0 0 0 4px rgba(41,151,255,0.35);
@@ -495,7 +495,8 @@ sup.fn {
   letter-spacing: -0.015em;
   line-height: 1.2;
   color: var(--text-on-dark);
-  max-width: 28ch;
+  max-width: 30ch;
+  text-wrap: balance;
   margin: 0 auto 1rem;
 }
 
@@ -524,7 +525,7 @@ sup.fn {
   transform: translateX(-50%);
   color: var(--text-on-dark-2);
   font-size: 1.4rem;
-  animation: bob 1.8s ease-in-out infinite;
+  animation: bob 1.8s ease-in-out 3;
 }
 .scroll-cue:hover { color: var(--text-on-dark); }
 @keyframes bob { 0%,100%{ transform: translate(-50%,0);} 50%{ transform: translate(-50%,7px);} }
@@ -726,7 +727,8 @@ sup.fn {
   color: var(--accent-bright);
   margin: 0 0 1.2rem;
 }
-.ts-meta { font-size: 0.98rem; letter-spacing: 0.1em; line-height: 1.5; max-width: 34ch; margin-inline: auto; text-wrap: balance; }
+.ts-meta { font-size: 0.98rem; letter-spacing: 0.1em; line-height: 1.5; max-width: 38ch; margin-inline: auto; text-wrap: balance; }
+.nowrap { white-space: nowrap; }
 .ts-meta-sub { margin-top: 0.15rem; }
 .ts-figure + .ts-verb { margin-bottom: 1.2rem; }
 .tombstone sup.fn { color: var(--text-on-dark-2); }
@@ -787,7 +789,7 @@ sup.fn {
   transition: transform 0.25s var(--ease);
 }
 .tl-toggle[aria-expanded="true"]::after { transform: translateY(1px) rotate(-135deg); }
-.tl-toggle:hover { color: var(--accent-hover); }
+.tl-toggle:hover { color: var(--accent-a11y); text-decoration: underline; }
 html:not(.js) .tl-toggle { display: none; }   /* nothing to toggle: details stay open */
 .tl-details { list-style: none; margin: 0.75rem 0 0; padding: 0.9rem 0 0; border-top: 1px solid var(--hairline); }
 html:not(.js) .tl-details { margin-top: 1rem; }
@@ -808,8 +810,8 @@ html:not(.js) .tl-details { margin-top: 1rem; }
   position: relative; overflow: hidden;
   border-radius: var(--radius-lg);
   padding: 2rem 1.9rem;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  min-height: 12rem;
+  display: flex; flex-direction: column; justify-content: flex-start;
+  min-height: 11rem;
 }
 .otc-icon {
   display: inline-flex; align-items: center; justify-content: center;
@@ -818,7 +820,7 @@ html:not(.js) .tl-details { margin-top: 1rem; }
   background: rgba(41,151,255,0.12);
   color: var(--accent-bright);
   font-size: 1.4rem;
-  margin-bottom: auto;
+  margin-bottom: 0;
 }
 .otc-title { font-size: 1.45rem; font-weight: 600; margin: 1.6rem 0 0; }
 .otc-text { font-size: 1.0625rem; line-height: 1.5; color: var(--text-on-dark-2); margin-top: 0.5rem; max-width: 52ch; text-wrap: pretty; }
@@ -1048,7 +1050,7 @@ html:not(.js) .tl-details { margin-top: 1rem; }
   border-top: 1px solid var(--hairline-dark);
 }
 .footnotes p {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-3);
   line-height: 1.5;
   margin-bottom: 0.2rem;
@@ -1334,3 +1336,20 @@ html.motion-ready .hero-title .hero-char {
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
 }
+
+/* ---------- Review fixes ---------- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.hero-title .hero-word { display: inline-block; white-space: nowrap; }
+/* Hero intro pre-hide: avoids a first-paint flash before motion.js animates it */
+html.hero-prehide .hero-title, html.hero-prehide .hero-eyebrow, html.hero-prehide .hero-sub,
+html.hero-prehide .hero-lead, html.hero-prehide .hero-cta { visibility: hidden; }
+/* Failsafe if main.js never initializes */
+html.js-failed .reveal, html.js-failed .reveal-soft, html.js-failed .reveal-scale, html.js-failed .rule-draw {
+  opacity: 1 !important; transform: none !important; filter: none !important;
+}
+html.js-failed .tl-toggle { display: none; }
+html.js-failed.hero-prehide .hero-title, html.js-failed.hero-prehide .hero-eyebrow, html.js-failed.hero-prehide .hero-sub,
+html.js-failed.hero-prehide .hero-lead, html.js-failed.hero-prehide .hero-cta { visibility: visible; }

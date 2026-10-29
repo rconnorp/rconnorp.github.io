@@ -11,6 +11,8 @@
   'use strict';
 
   var docEl = document.documentElement;
+  docEl.classList.add('js-ready');
+  docEl.classList.remove('js-failed');
   var rmQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   var reduceMotion = rmQuery.matches;
   var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -47,6 +49,13 @@
       var open = navLinks.classList.toggle('open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.focus();
+      }
+    });
     navLinks.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
         navLinks.classList.remove('open');
@@ -67,6 +76,12 @@
     el.appendChild(num);
     el.appendChild(unit);
     el._num = num;
+    /* assistive tech gets the final value; the animated digits are decorative */
+    el.setAttribute('aria-hidden', 'true');
+    var sr = document.createElement('span');
+    sr.className = 'sr-only';
+    sr.textContent = prefix + fmt(parseFloat(el.getAttribute('data-count-to')), parseInt(el.getAttribute('data-decimals') || '0', 10)) + suffix;
+    if (el.parentNode) el.parentNode.insertBefore(sr, el.nextSibling);
     return num;
   }
 
@@ -445,24 +460,42 @@
   document.querySelectorAll('[data-copy-email]').forEach(function (btn) {
     var label = btn.querySelector('.contact-copy-text');
     var resetTimer = null;
+    var status = document.createElement('span');
+    status.className = 'sr-only';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    btn.parentNode.insertBefore(status, btn.nextSibling);
+    var fail = function (email) {
+      if (label) label.textContent = 'Copy failed';
+      status.textContent = 'Could not copy. Please email ' + email + ' directly.';
+      if (resetTimer) window.clearTimeout(resetTimer);
+      resetTimer = window.setTimeout(function () {
+        if (label) label.textContent = 'Copy';
+        status.textContent = '';
+      }, 3000);
+    };
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       var email = btn.getAttribute('data-copy-email');
       var confirm = function () {
         if (label) label.textContent = 'Copied!';
+        status.textContent = 'Copied ' + email + ' to clipboard';
         btn.classList.add('is-copied');
         if (resetTimer) window.clearTimeout(resetTimer);
         resetTimer = window.setTimeout(function () {
           if (label) label.textContent = 'Copy';
+          status.textContent = '';
           btn.classList.remove('is-copied');
         }, 1800);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(email).then(confirm, function () {
-          if (legacyCopy(email)) confirm();
+          if (legacyCopy(email)) confirm(); else fail(email);
         });
       } else if (legacyCopy(email)) {
         confirm();
+      } else {
+        fail(email);
       }
     });
   });

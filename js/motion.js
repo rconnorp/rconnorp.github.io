@@ -6,6 +6,7 @@
   var root = document.documentElement;
   if (!window.gsap || !window.ScrollTrigger || !window.SplitText) {
     root.classList.add('no-motion');
+    root.classList.remove('hero-prehide');
     return;
   }
   gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -22,8 +23,9 @@
     var tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
     if (name) {
       SplitText.create(name, {
-        type: 'chars',
+        type: 'words,chars',
         mask: 'chars',
+        wordsClass: 'hero-word',
         charsClass: 'hero-char',
         onSplit: function (self) {
           /* background-clip:text on the parent cannot paint through the split
@@ -34,9 +36,11 @@
             ch.style.backgroundPosition = (-(ch.getBoundingClientRect().left - left)) + 'px 0';
           });
           tl.from(self.chars, { yPercent: 110, duration: 1.1, stagger: 0.025 }, 0.05);
+          root.classList.remove('hero-prehide');
         }
       });
     }
+    setTimeout(function () { root.classList.remove('hero-prehide'); }, 1500);
     var eyebrow = rest.filter(function (e) { return e.classList.contains('hero-eyebrow'); });
     var later = rest.filter(function (e) { return !e.classList.contains('hero-eyebrow'); });
     if (eyebrow.length) tl.fromTo(eyebrow, { opacity: 0, translate: '0 16px' }, { opacity: 1, translate: '0 0px', duration: 0.8 }, 0);

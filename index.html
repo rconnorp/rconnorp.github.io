@@ -4,7 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Mark JS as available so animated content stays visible if JS is off -->
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('hero-prehide'); } catch (e) {}
+      /* Failsafe: if main.js has not initialized after 4s, show everything */
+      setTimeout(function () {
+        if (!d.classList.contains('js-ready')) d.classList.add('js-failed');
+      }, 4000);
+    })();
+  </script>
   <title>Connor Peterson | Investment Banking &amp; Private Equity · BYU</title>
   <meta name="description" content="Connor Peterson is a student at BYU focused on investment banking, private equity, and M&amp;A. Investment analyst intern at Hurley Investments, head of sales at HeyLily AI, and first place at the BYU Sunoco Case Competition.">
   <meta name="author" content="Connor Peterson">
@@ -50,7 +60,6 @@
     ],
     "alumniOf": { "@type": "CollegeOrUniversity", "name": "Brigham Young University" },
     "knowsAbout": ["Investment banking", "Private equity", "Mergers and acquisitions", "Valuation", "Equity research"],
-    "homeLocation": { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Provo", "addressRegion": "UT", "addressCountry": "US" } },
     "knowsLanguage": ["English", "Spanish"],
     "sameAs": [
       "https://linkedin.com/in/connor-peterson-840009235"
@@ -91,7 +100,7 @@
   <main id="top">
 
     <!-- ===== HERO ===== -->
-    <header class="hero" aria-label="Introduction">
+    <div class="hero">
       <p class="hero-eyebrow">Investment Banking · Private Equity · M&amp;A</p>
       <h1 class="hero-title grad-text grad-text--keynote" data-split-chars>Connor Peterson</h1>
       <p class="hero-sub">I'm a student at BYU focused on investment banking, private equity, and M&amp;A.</p>
@@ -104,7 +113,7 @@
         <a href="#contact" class="btn-apple-text on-dark">Get in touch <span class="chev" aria-hidden="true">›</span></a>
       </div>
       <a href="#focus" class="scroll-cue" aria-label="Scroll down"><i class="bi bi-chevron-down" aria-hidden="true"></i></a>
-    </header>
+    </div>
 
     <!-- ===== WHAT I'M WORKING ON ===== -->
     <section class="sec sec-alt sec-seam" id="focus" aria-label="What I'm working on">
@@ -210,7 +219,7 @@
             <h3 class="ts-target">Fabrinet</h3>
             <p class="ts-figure">NYSE: FN</p>
             <p class="ts-verb">Long recommendation</p>
-            <p class="ts-meta">2026 University of Chicago AI-Enabled Investing Case Competition<sup class="fn">2</sup></p>
+            <p class="ts-meta">2026 University of Chicago <span class="nowrap">AI-Enabled</span> Investing Case Competition<sup class="fn">2</sup></p>
           </article>
         </div>
       </div>
@@ -226,7 +235,7 @@
 
         <div class="timeline-wrap">
           <span class="tl-line" aria-hidden="true"><span class="tl-line-fill"></span></span>
-          <ol class="timeline" data-timeline>
+          <ol class="timeline" data-timeline role="list">
 
             <li class="tl-item">
               <span class="tl-dot" aria-hidden="true"></span>
@@ -236,7 +245,7 @@
                 <p class="tl-role">Full-time Volunteer Representative; Technology &amp; Social Media Manager</p>
                 <p class="tl-summary">Raised Facebook lead conversions from about 5 to 100+ a month and led a team of 20 volunteers.</p>
                 <button class="tl-toggle" type="button" aria-expanded="true" aria-controls="tl-volunteer">Resume details</button>
-                <ul class="tl-details" id="tl-volunteer">
+                <ul class="tl-details" role="list" id="tl-volunteer">
                   <li>Increased Facebook lead conversion from ~5 to 100+ per month by restructuring targeting, budget, and content quality</li>
                   <li>Improved regional performance metrics 2.5x leading and developed a team of 20 volunteers</li>
                   <li>Engaged daily with Spanish-speaking community members across diverse socioeconomic backgrounds over 2 years</li>
@@ -252,7 +261,7 @@
                 <p class="tl-role">Sales Representative</p>
                 <p class="tl-summary">Sold $80,000+ in fiber internet door to door in two months, converting leads at more than double the company standard.</p>
                 <button class="tl-toggle" type="button" aria-expanded="true" aria-controls="tl-factory">Resume details</button>
-                <ul class="tl-details" id="tl-factory">
+                <ul class="tl-details" role="list" id="tl-factory">
                   <li>Generated $80,000+ in revenue over 2 months through targeted door-to-door fiber internet sales</li>
                   <li>Converted leads at more than double the company standard by delivering focused, benefit-driven product presentations</li>
                 </ul>
@@ -267,7 +276,7 @@
                 <p class="tl-role">Videographer &amp; Photographer</p>
                 <p class="tl-summary">Direct and edit video for the center; average engagement is up 360%.</p>
                 <button class="tl-toggle" type="button" aria-expanded="true" aria-controls="tl-sorensen">Resume details</button>
-                <ul class="tl-details" id="tl-sorensen">
+                <ul class="tl-details" role="list" id="tl-sorensen">
                   <li>Grew average video engagement 360% by producing promotional content distributed across BYU's network</li>
                   <li>Collaborated with campus organizations to develop extensive social media content, expanding reach with 20+ videos</li>
                   <li>Directed and edited video projects end-to-end, managing production budgets from storyboard to post</li>
@@ -283,7 +292,7 @@
                 <p class="tl-role">1st place</p>
                 <p class="tl-summary">Proposed and financed a $925M acquisition of Offen Petroleum.</p>
                 <button class="tl-toggle" type="button" aria-expanded="true" aria-controls="tl-sunoco">Resume details</button>
-                <ul class="tl-details" id="tl-sunoco">
+                <ul class="tl-details" role="list" id="tl-sunoco">
                   <li>Won 1st place against ~30 competing teams by proposing Sunoco's ~$925M acquisition of Offen Petroleum, identifying a 6-state PADD IV distribution gap in Sunoco's NuStar infrastructure</li>
                   <li>Modeled $180M combined EBITDA ($110M standalone + $70M in synergies) at an effective 5.1x post-synergy multiple, projecting &gt;10% DCF accretion by Year 3 and ~19% IRR</li>
                   <li>Structured a $925M financing package ($400M cash, $375M term loan, $150M revolver) maintaining net leverage at 4.1x, well within SUN's 5.0x covenant ceiling</li>
@@ -299,7 +308,7 @@
                 <p class="tl-role">Head of Sales</p>
                 <p class="tl-summary">First sales hire; built outbound sales from zero and own the collision repair vertical.</p>
                 <button class="tl-toggle" type="button" aria-expanded="true" aria-controls="tl-heylily">Resume details</button>
-                <ul class="tl-details" id="tl-heylily">
+                <ul class="tl-details" role="list" id="tl-heylily">
                   <li>Built the outbound sales function from zero as first sales hire, authoring the cold-call script and objection framework</li>
                   <li>Recruited and trained two sales representatives, and stood up the CRM with outreach automation tracking every lead</li>
                   <li>Own full-cycle pipeline in the collision repair vertical: prospecting, outreach, discovery, and live demos</li>
@@ -315,7 +324,7 @@
                 <p class="tl-role">Investment Analyst Intern</p>
                 <p class="tl-summary">Equity research and valuation summaries on prospective holdings.</p>
                 <button class="tl-toggle" type="button" aria-expanded="true" aria-controls="tl-hurley">Resume details</button>
-                <ul class="tl-details" id="tl-hurley">
+                <ul class="tl-details" role="list" id="tl-hurley">
                   <li>Conduct fundamental equity research on prospective holdings and build supporting valuation summaries</li>
                   <li>Prepare portfolio review and reporting materials for private equity, family office, and individual clients</li>
                   <li>Track sector and macro developments across covered names, flagging position-level risks to the team</li>
@@ -440,7 +449,7 @@
                 <div class="resume-roleline">
                   <span class="resume-role">Pre-Business</span>
                 </div>
-                <ul class="resume-bullets">
+                <ul class="resume-bullets" role="list">
                   <li>GPA 3.66</li>
                   <li>Finance Society; Private Equity &amp; Venture Capital Association</li>
                 </ul>
@@ -451,7 +460,7 @@
             <div class="resume-group">
               <h3 class="resume-group-title"><i class="bi bi-award-fill" aria-hidden="true"></i> Skills</h3>
               <div class="resume-item">
-                <ul class="resume-bullets">
+                <ul class="resume-bullets" role="list">
                   <li><strong>Spanish</strong> (full professional fluency)</li>
                   <li><strong>Video &amp; story production</strong> (writer, director, director of photography)</li>
                 </ul>
@@ -557,10 +566,10 @@
   <footer class="site-footer" role="contentinfo">
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-social" aria-label="Social links">
+        <nav class="footer-social" aria-label="Social links">
           <a href="https://linkedin.com/in/connor-peterson-840009235" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
           <a href="mailto:rconnorp@byu.edu" aria-label="Email Connor"><i class="bi bi-envelope" aria-hidden="true"></i></a>
-        </div>
+        </nav>
         <nav class="footer-links" aria-label="Footer navigation">
           <a href="#competitions">Competitions</a>
           <a href="#experience">Experience</a>
